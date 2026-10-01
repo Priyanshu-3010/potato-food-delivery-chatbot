@@ -2,38 +2,110 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#1F1B24" />
   <title>Potato - Food Delivery Assistant</title>
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🥔</text></svg>" />
+
+  <!-- Fonts are optional: if they fail to load, system fonts are used. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Figtree:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  />
 
   <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
 
-  <div class="chat-container">
+  <!-- Potato mascot, defined once and reused with <use href="#potato"> -->
+  <svg class="sprite" aria-hidden="true" focusable="false">
+    <symbol id="potato" viewBox="0 0 64 64">
+      <path d="M10 35C8 22 19 11 33 11c14 0 23 9 21 22-2 14-13 21-26 20C18 52 11 46 10 35z" fill="#D9A25B" />
+      <path d="M18 24c3-6 9-9 15-9" fill="none" stroke="#EDC48A" stroke-width="3" stroke-linecap="round" />
+      <circle cx="21" cy="42" r="2" fill="#B87F3C" />
+      <circle cx="46" cy="24" r="2" fill="#B87F3C" />
+      <circle cx="43" cy="44" r="1.6" fill="#B87F3C" />
+      <circle cx="26" cy="32" r="2.6" fill="#2A1D15" />
+      <circle cx="40" cy="32" r="2.6" fill="#2A1D15" />
+      <path d="M29 40q4 4 8 0" fill="none" stroke="#2A1D15" stroke-width="2.2" stroke-linecap="round" />
+    </symbol>
+  </svg>
 
-    <header class="chat-header">
-      <h1>🥔 Potato</h1>
-      <p>Your Food Delivery Assistant</p>
+  <div class="app">
+
+    <header class="app-header">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">
+          <svg><use href="#potato" /></svg>
+        </span>
+        <div class="brand-text">
+          <h1>Potato</h1>
+          <p id="header-status">Your food delivery assistant</p>
+        </div>
+      </div>
     </header>
 
     <main id="chat-box" class="chat-box">
-      <div class="message bot">
-        Hey! I'm Potato 🥔<br>
-        What would you like to eat today?
-      </div>
+
+      <!-- Empty state: hidden once the first message is sent -->
+      <section id="welcome" class="welcome">
+        <div class="welcome-art" aria-hidden="true">
+          <svg class="mascot"><use href="#potato" /></svg>
+          <span class="orbit e1">🍕</span>
+          <span class="orbit e2">🥗</span>
+          <span class="orbit e3">🍛</span>
+          <span class="orbit e4">🍔</span>
+        </div>
+
+        <h2>Hungry? Tell Potato what you're craving.</h2>
+        <p>Ask for dishes, budgets, orders, delivery or refunds.</p>
+
+        <div class="suggestions">
+          <button type="button" class="suggestion" data-prompt="Find me a pizza under ₹300">
+            <span class="suggestion-icon" aria-hidden="true">🍕</span>
+            <span>Find me a pizza under ₹300</span>
+          </button>
+          <button type="button" class="suggestion" data-prompt="What are the best vegetarian options?">
+            <span class="suggestion-icon" aria-hidden="true">🥗</span>
+            <span>What are the best vegetarian options?</span>
+          </button>
+          <button type="button" class="suggestion" data-prompt="Suggest a meal for two">
+            <span class="suggestion-icon" aria-hidden="true">🍽️</span>
+            <span>Suggest a meal for two</span>
+          </button>
+          <button type="button" class="suggestion" data-prompt="Show me budget-friendly meals">
+            <span class="suggestion-icon" aria-hidden="true">💰</span>
+            <span>Show me budget-friendly meals</span>
+          </button>
+        </div>
+      </section>
+
+      <div id="messages" class="messages" role="log" aria-live="polite"></div>
     </main>
 
-    <form id="chat-form" class="chat-input">
-      <input
-        type="text"
-        id="message-input"
-        placeholder="Ask Potato something..."
-        autocomplete="off"
-      />
+    <footer class="composer-wrap">
+      <form id="chat-form" class="composer" autocomplete="off">
+        <textarea
+          id="message-input"
+          rows="1"
+          placeholder="Ask Potato about food, orders or delivery..."
+          aria-label="Message Potato"
+          autocomplete="off"
+        ></textarea>
 
-      <button type="submit">Send</button>
-    </form>
+        <button type="submit" id="send-button" class="send-btn" aria-label="Send message" disabled>
+          <svg class="icon-send" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 19V5M5 12l7-7 7 7" />
+          </svg>
+          <span class="spinner" aria-hidden="true"></span>
+        </button>
+      </form>
+      <p class="hint">Enter to send, Shift + Enter for a new line</p>
+    </footer>
 
   </div>
 
